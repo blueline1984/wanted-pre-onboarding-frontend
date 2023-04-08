@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "../components/Form/Form";
 import { validateEmail, validatePassword } from "../helper/checkValidation";
 import { baseInstance } from "../api/utils/instance";
@@ -8,6 +9,7 @@ const SignUpPage = () => {
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
@@ -20,6 +22,9 @@ const SignUpPage = () => {
 
       setMessage("Successfully Signed Up!");
       setIsLoading(false);
+
+      //redirection
+      navigate("/signin");
     } catch (error) {
       setMessage(error);
     }
