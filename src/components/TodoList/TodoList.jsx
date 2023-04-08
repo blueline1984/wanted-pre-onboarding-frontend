@@ -1,10 +1,10 @@
 import * as S from "./TodoList.styled";
 import Button from "../Button/Button";
 
-const TodoList = ({ todoList }) => {
+const TodoList = ({ todoData }) => {
   return (
     <>
-      {todoList.map((todoItem) => {
+      {todoData.map((todoItem) => {
         return (
           <li key={todoItem.id}>
             <S.Label>

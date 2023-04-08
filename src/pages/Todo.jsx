@@ -1,40 +1,54 @@
-import Button from "../components/Button/Button";
+import { useState, useEffect } from "react";
 import TodoInput from "../components/TodoInput/TodoInput";
 import TodoList from "../components/TodoList/TodoList";
+import { authInstance } from "../api/utils/instance";
 
 const TodoPage = () => {
-  const mockData = [
-    {
-      id: 1,
-      todo: "과제하기",
-      isCompleted: false,
-      userId: 1,
-    },
-    {
-      id: 2,
-      todo: "코딩하기",
-      isCompleted: true,
-      userId: 1,
-    },
-    {
-      id: 3,
-      todo: "장보기",
-      isCompleted: false,
-      userId: 1,
-    },
-  ];
+  const [todoData, setTodoData] = useState([]);
 
-  const handleInput = () => {};
-
-  const handleClickAddButton = () => {
-    console.log("add todo");
+  const handleChangeInput = (e) => {
+    setTodoData({
+      ...todoData,
+      todo: e.target.value,
+    });
   };
+
+  const handleClickAddTodo = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await authInstance.post("todos", {
+        todo: todoData.todo,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await authInstance.get("todos");
+        setTodoData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
       <h1>This is Todo Page</h1>
-      <TodoInput onChange={handleInput} onButtonClick={handleClickAddButton} />
-      <TodoList todoList={mockData} />
+      <form onSubmit={handleClickAddTodo}>
+        <TodoInput
+          onChange={handleChangeInput}
+          todoValue={todoData.todo}
+          buttonType="submit"
+        />
+        <TodoList todoData={todoData} />
+      </form>
     </>
   );
 };

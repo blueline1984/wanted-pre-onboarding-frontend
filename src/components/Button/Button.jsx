@@ -12,7 +12,8 @@ const Button = ({
       type={buttonType}
       onClick={onButtonClick}
       data-testid={buttonDataTestId}
-      disabled={!isValid}
+      // disabled={buttonType === "submit" ? !isValid : false}
+      disabled={false}
     >
       {buttonText}
     </S.Button>
