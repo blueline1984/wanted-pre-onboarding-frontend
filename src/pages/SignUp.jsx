@@ -22,8 +22,6 @@ const SignUpPage = () => {
 
       setMessage("Successfully Signed Up!");
       setIsLoading(false);
-
-      //redirection
       navigate("/signin");
     } catch (error) {
       setMessage(error);
