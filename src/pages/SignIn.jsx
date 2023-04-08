@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Form from "../components/Form/Form";
 import { validateEmail, validatePassword } from "../helper/checkValidation";
 import { baseInstance } from "../api/utils/instance";
@@ -8,6 +9,7 @@ const SignInPage = () => {
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmitSignIn = async (e) => {
     e.preventDefault();
@@ -18,10 +20,11 @@ const SignInPage = () => {
         password: signInInput.password,
       });
 
-      console.log(response.data.access_token);
+      localStorage.setItem("token", response.data.access_token);
 
       setMessage("Successfully Signed In!");
       setIsLoading(false);
+      navigate("/todo");
     } catch (error) {
       setMessage(error);
     }
@@ -46,6 +49,12 @@ const SignInPage = () => {
       setIsValid(false);
     }
   }, [signInInput]);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     navigate("/todo");
+  //   }
+  // }, []);
 
   return (
     <>
