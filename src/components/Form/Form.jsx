@@ -9,6 +9,7 @@ const Form = ({
   onButtonClick,
   buttonText,
   buttonDataTestId,
+  isValid,
 }) => {
   return (
     <S.Form onSubmit={onSubmit}>
@@ -32,6 +33,7 @@ const Form = ({
         onButtonClick={onButtonClick}
         buttonText={buttonText}
         buttonDataTestId={buttonDataTestId}
+        isValid={isValid}
       />
     </S.Form>
   );
