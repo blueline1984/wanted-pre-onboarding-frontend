@@ -5,7 +5,7 @@ import { authInstance } from "../api/utils/instance";
 
 const TodoPage = () => {
   const [todoData, setTodoData] = useState([]);
-
+  const [modifyMode, setModifyMode] = useState(false);
   const handleChangeInput = (e) => {
     setTodoData({
       ...todoData,
@@ -47,7 +47,11 @@ const TodoPage = () => {
           todoValue={todoData.todo}
           buttonType="submit"
         />
-        <TodoList todoData={todoData} />
+        <TodoList
+          todoData={todoData}
+          modifyMode={modifyMode}
+          setModifyMode={setModifyMode}
+        />
       </form>
     </>
   );
