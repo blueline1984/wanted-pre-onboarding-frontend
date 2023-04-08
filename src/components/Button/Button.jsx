@@ -1,9 +1,15 @@
 import * as S from "./Button.styled";
 
-const Button = ({ onButtonClick, buttonDataTestId, buttonText, isValid }) => {
+const Button = ({
+  onButtonClick,
+  buttonDataTestId,
+  buttonText,
+  isValid,
+  buttonType,
+}) => {
   return (
     <S.Button
-      type="submit"
+      type={buttonType}
       onClick={onButtonClick}
       data-testid={buttonDataTestId}
       disabled={!isValid}

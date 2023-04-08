@@ -1,13 +1,28 @@
 import { useState, useEffect } from "react";
 import Form from "../components/Form/Form";
 import { validateEmail, validatePassword } from "../helper/checkValidation";
+import { baseInstance } from "../api/utils/instance";
 
 const SignUpPage = () => {
   const [signUpInput, setSignUpInput] = useState({ email: "", password: "" });
   const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleSubmitSignUp = (e) => {
+  const handleSubmitSignUp = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await baseInstance.post("auth/signup", {
+        email: signUpInput.email,
+        password: signUpInput.password,
+      });
+
+      setMessage("Successfully Signed Up!");
+      setIsLoading(false);
+    } catch (error) {
+      setMessage(error);
+    }
   };
 
   const handleChangeInput = (e) => {
@@ -18,8 +33,6 @@ const SignUpPage = () => {
       [id]: value,
     });
   };
-
-  const handleClickSignUp = () => {};
 
   useEffect(() => {
     if (
@@ -40,10 +53,10 @@ const SignUpPage = () => {
         emailValue={signUpInput.email}
         passswordValue={signUpInput.password}
         onInputChange={handleChangeInput}
-        onButtonClick={handleClickSignUp}
         buttonText="Sign Up"
         buttonDataTestId="signup-button"
         isValid={isValid}
+        buttonType="submit"
       />
     </>
   );
