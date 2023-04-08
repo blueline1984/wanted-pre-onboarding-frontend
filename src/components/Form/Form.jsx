@@ -1,13 +1,33 @@
 import * as S from "./Form.styled";
 import Button from "../Button/Button";
 
-const Form = ({ onSubmit, onButtonClick, buttonText, buttonDataTestId }) => {
+const Form = ({
+  onSubmit,
+  onInputChange,
+  emailValue,
+  passwordValue,
+  onButtonClick,
+  buttonText,
+  buttonDataTestId,
+}) => {
   return (
     <S.Form onSubmit={onSubmit}>
       <S.Label htmlFor="email">Email</S.Label>
-      <S.Input id="email" type="email" data-testid="email-input" />
+      <S.Input
+        id="email"
+        type="email"
+        value={emailValue}
+        onChange={onInputChange}
+        data-testid="email-input"
+      />
       <S.Label htmlFor="password">Password</S.Label>
-      <S.Input id="password" type="password" data-testid="password-input" />
+      <S.Input
+        id="password"
+        type="password"
+        value={passwordValue}
+        onChange={onInputChange}
+        data-testid="password-input"
+      />
       <Button
         onButtonClick={onButtonClick}
         buttonText={buttonText}
