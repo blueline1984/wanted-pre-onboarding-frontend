@@ -2,8 +2,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import TodoPage from "./pages/Todo";
-import PrivateRoute from "./route/PrivateRoute";
-import PublicRoute from "./route/PublicRoute";
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
 import { isSignedIn } from "./helper/isSignedIn";
 
 const App = () => {
