@@ -8,7 +8,7 @@ const TodoPage = () => {
   const [modifyMode, setModifyMode] = useState([]);
   const [newTodo, setNewTodo] = useState("");
 
-  const fetchData = async () => {
+  const fetchTodoListData = async () => {
     try {
       const response = await authInstance.get("todos");
       setTodoData(response.data);
@@ -35,7 +35,7 @@ const TodoPage = () => {
       console.log(error);
     }
 
-    fetchData();
+    fetchTodoListData();
   };
 
   const handleClickToggleCheck = async (e) => {
@@ -64,8 +64,6 @@ const TodoPage = () => {
       }
       return todoItem;
     });
-
-    console.log(target);
 
     setTodoData(target);
   };
@@ -99,21 +97,11 @@ const TodoPage = () => {
     const reponse = await authInstance.delete(`todos/${e.target.id}`);
     console.log(reponse);
 
-    fetchData();
+    fetchTodoListData();
   };
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await authInstance.get("todos");
-    //     setTodoData(response.data);
-    //     setModifyMode(new Array(response.data.length).fill(false));
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
-    fetchData();
+    fetchTodoListData();
   }, []);
 
   return (

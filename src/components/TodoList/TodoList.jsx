@@ -4,7 +4,6 @@ import Button from "../Button/Button";
 const TodoList = ({
   todoData,
   modifyMode,
-  setModifyMode,
   onCheck,
   onSubmit,
   onInputChange,
