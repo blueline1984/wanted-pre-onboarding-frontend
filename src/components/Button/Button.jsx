@@ -4,7 +4,6 @@ const Button = ({
   onButtonClick,
   buttonDataTestId,
   buttonText,
-  isValid,
   buttonType,
 }) => {
   return (
@@ -12,7 +11,6 @@ const Button = ({
       type={buttonType}
       onClick={onButtonClick}
       data-testid={buttonDataTestId}
-      // disabled={buttonType === "submit" ? !isValid : false}
       disabled={false}
     >
       {buttonText}

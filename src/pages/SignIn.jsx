@@ -50,12 +50,6 @@ const SignInPage = () => {
     }
   }, [signInInput]);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     navigate("/todo");
-  //   }
-  // }, []);
-
   return (
     <>
       <h1>This is Signin Page</h1>
