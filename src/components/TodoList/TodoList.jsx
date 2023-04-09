@@ -9,6 +9,7 @@ const TodoList = ({
   onSubmit,
   onInputChange,
   onClickModifyMode,
+  onClickDelete,
 }) => {
   return (
     <>
@@ -50,13 +51,13 @@ const TodoList = ({
                   buttonDataTestId="modify-button"
                   buttonText="Modify"
                 />
-                <Button
-                  onButtonClick={() => {
-                    console.log("delete");
-                  }}
-                  buttonDataTestId="delete-button"
-                  buttonText="Delete"
-                />
+                <form onSubmit={onClickDelete} id={todoItem.id}>
+                  <Button
+                    buttonDataTestId="delete-button"
+                    buttonText="Delete"
+                    buttonType="submit"
+                  />
+                </form>
               </>
             )}
           </li>

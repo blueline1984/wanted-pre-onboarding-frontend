@@ -1,14 +1,10 @@
 import * as S from "./TodoInput.styled";
 import Button from "../Button/Button";
 
-const TodoInput = ({ onChange, todoValue, buttonType }) => {
+const TodoInput = ({ onChange, value, buttonType }) => {
   return (
     <>
-      <S.Input
-        data-testid="new-todo-input"
-        onChange={onChange}
-        value={todoValue}
-      />
+      <S.Input data-testid="new-todo-input" onChange={onChange} value={value} />
       <Button
         buttonDataTestId="new-todo-add-button"
         buttonText="add"

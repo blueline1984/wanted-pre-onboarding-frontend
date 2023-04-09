@@ -6,25 +6,36 @@ import { authInstance } from "../api/utils/instance";
 const TodoPage = () => {
   const [todoData, setTodoData] = useState([]);
   const [modifyMode, setModifyMode] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
+
+  const fetchData = async () => {
+    try {
+      const response = await authInstance.get("todos");
+      setTodoData(response.data);
+      setModifyMode(new Array(response.data.length).fill(false));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChangeInput = (e) => {
-    setTodoData({
-      ...todoData,
-      todo: e.target.value,
-    });
+    setNewTodo(e.target.value);
   };
 
   const handleClickAddTodo = async (e) => {
     e.preventDefault();
 
+    const body = {
+      todo: newTodo,
+    };
     try {
-      const response = await authInstance.post("todos", {
-        todo: todoData.todo,
-      });
+      const response = await authInstance.post("todos", body);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
+
+    fetchData();
   };
 
   const handleClickToggleCheck = async (e) => {
@@ -80,16 +91,27 @@ const TodoPage = () => {
     setModifyMode(updatedModifiedState);
   };
 
+  const handleClickDeleteTodo = async (e) => {
+    e.preventDefault();
+
+    console.log("e.target", e.target);
+
+    const reponse = await authInstance.delete(`todos/${e.target.id}`);
+    console.log(reponse);
+
+    fetchData();
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await authInstance.get("todos");
-        setTodoData(response.data);
-        setModifyMode(new Array(response.data.length).fill(false));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await authInstance.get("todos");
+    //     setTodoData(response.data);
+    //     setModifyMode(new Array(response.data.length).fill(false));
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
 
     fetchData();
   }, []);
@@ -100,7 +122,7 @@ const TodoPage = () => {
       <form onSubmit={handleClickAddTodo}>
         <TodoInput
           onChange={handleChangeInput}
-          todoValue={todoData.todo}
+          value={newTodo}
           buttonType="submit"
         />
       </form>
@@ -112,6 +134,7 @@ const TodoPage = () => {
         onSubmit={handleClickUpdateTodo}
         onInputChange={handleChangeNewInput}
         onClickModifyMode={handleClickModifyMode}
+        onClickDelete={handleClickDeleteTodo}
       />
     </>
   );
