@@ -56,17 +56,28 @@ const TodoPage = () => {
 
     console.log(target);
 
-    // setTodo(target)
+    setTodoData(target);
   };
 
-  const handleClickUpdateTodo = async (e) => {
+  const handleClickUpdateTodo = async (e, position) => {
+    e.preventDefault();
+
     const target = todoData.filter((todoItem) => todoItem.id === +e.target.id);
-    console.log(target);
     const body = {
-      todo: "",
-      isCompleted: true,
+      todo: target[0].todo,
+      isCompleted: target[0].isCompleted,
     };
-    const reponse = await authInstance.put(`todos/${e.target.id}`, {});
+    const reponse = await authInstance.put(`todos/${e.target.id}`, body);
+    console.log("update", reponse);
+
+    handleClickModifyMode(position);
+  };
+
+  const handleClickModifyMode = (position) => {
+    const updatedModifiedState = modifyMode.map((item, index) =>
+      index === position ? !item : item
+    );
+    setModifyMode(updatedModifiedState);
   };
 
   useEffect(() => {
@@ -100,6 +111,7 @@ const TodoPage = () => {
         onCheck={handleClickToggleCheck}
         onSubmit={handleClickUpdateTodo}
         onInputChange={handleChangeNewInput}
+        onClickModifyMode={handleClickModifyMode}
       />
     </>
   );

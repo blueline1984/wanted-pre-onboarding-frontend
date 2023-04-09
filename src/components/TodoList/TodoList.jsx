@@ -8,57 +8,45 @@ const TodoList = ({
   onCheck,
   onSubmit,
   onInputChange,
+  onClickModifyMode,
 }) => {
-  const handleClickModifyMode = (position) => {
-    const updatedModifiedState = modifyMode.map((item, index) =>
-      index === position ? !item : item
-    );
-    setModifyMode(updatedModifiedState);
-  };
-
   return (
     <>
       {todoData.map((todoItem, index) => {
         return (
           <li key={todoItem.id}>
-            <S.Label>
-              <S.Input
-                type="checkbox"
-                id={todoItem.id}
-                onChange={onCheck}
-                checked={todoItem.isCompleted}
-              />
-              {modifyMode[index] ? (
-                <S.Input
-                  placeholder="수정되는 인풋"
-                  onChange={onInputChange}
-                  id={todoItem.id}
-                  value={todoItem.todo}
-                />
-              ) : (
-                <S.Span>{todoItem.todo}</S.Span>
-              )}
-            </S.Label>
             {modifyMode[index] ? (
-              <>
-                <Button
-                  onButtonClick={() => {
-                    console.log("submit");
-                  }}
-                  buttonDataTestId="submit-button"
-                  buttonText="Submit"
-                  buttonType="submit"
+              <S.Label>
+                <S.Input
+                  type="checkbox"
+                  id={todoItem.id}
+                  onChange={onCheck}
+                  checked={todoItem.isCompleted}
                 />
+                <form onSubmit={(e) => onSubmit(e, index)} id={todoItem.id}>
+                  <S.Input
+                    placeholder="수정되는 인풋"
+                    id={todoItem.id}
+                    onChange={onInputChange}
+                    value={todoItem.todo}
+                  />
+                  <Button
+                    buttonDataTestId="submit-button"
+                    buttonText="Submit"
+                    buttonType="submit"
+                  />
+                </form>
                 <Button
-                  onButtonClick={() => handleClickModifyMode(index)}
+                  onButtonClick={() => onClickModifyMode(index)}
                   buttonDataTestId="cancel-button"
                   buttonText="Cancel"
                 />
-              </>
+              </S.Label>
             ) : (
               <>
+                <S.Span>{todoItem.todo}</S.Span>
                 <Button
-                  onButtonClick={() => handleClickModifyMode(index)}
+                  onButtonClick={() => onClickModifyMode(index)}
                   buttonDataTestId="modify-button"
                   buttonText="Modify"
                 />
