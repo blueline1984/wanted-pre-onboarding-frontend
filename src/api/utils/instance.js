@@ -7,6 +7,8 @@ const baseAPI = (url, options) => {
   return instance;
 };
 
+console.log(localStorage.getItem("token"));
+
 const authAPI = (url, options) => {
   const token = localStorage.getItem("token");
   const instance = axios.create({

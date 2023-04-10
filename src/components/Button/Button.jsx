@@ -5,13 +5,14 @@ const Button = ({
   buttonDataTestId,
   buttonText,
   buttonType,
+  isEnabled = true,
 }) => {
   return (
     <S.Button
       type={buttonType}
       onClick={onButtonClick}
       data-testid={buttonDataTestId}
-      disabled={false}
+      disabled={!isEnabled}
     >
       {buttonText}
     </S.Button>

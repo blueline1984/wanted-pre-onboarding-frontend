@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import TodoInput from "../components/TodoInput/TodoInput";
 import TodoList from "../components/TodoList/TodoList";
 import { authInstance } from "../api/utils/instance";
@@ -8,9 +9,14 @@ const TodoPage = () => {
   const [modifyMode, setModifyMode] = useState([]);
   const [newTodo, setNewTodo] = useState("");
 
-  const fetchTodoListData = async () => {
+  const getTodos = async () => {
+    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
     try {
-      const response = await authInstance.get("todos");
+      const response = await axios.get(`${baseURL}todos`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setTodoData(response.data);
       setModifyMode(new Array(response.data.length).fill(false));
     } catch (error) {
@@ -18,24 +24,45 @@ const TodoPage = () => {
     }
   };
 
-  const handleChangeInput = (e) => {
-    setNewTodo(e.target.value);
-  };
-
-  const handleClickAddTodo = async (e) => {
+  const createTodo = async (e) => {
     e.preventDefault();
 
     const body = {
       todo: newTodo,
     };
     try {
-      const response = await authInstance.post("todos", body);
-      console.log(response);
+      await authInstance.post("todos", body);
     } catch (error) {
       console.log(error);
     }
 
-    fetchTodoListData();
+    getTodos();
+  };
+
+  const updateTodo = async (e, position) => {
+    e.preventDefault();
+
+    const target = todoData.filter((todoItem) => todoItem.id === +e.target.id);
+    const body = {
+      todo: target[0].todo,
+      isCompleted: target[0].isCompleted,
+    };
+    const reponse = await authInstance.put(`todos/${e.target.id}`, body);
+    console.log("update", reponse);
+
+    handleClickModifyMode(position);
+  };
+
+  const deleteTodo = async (e) => {
+    e.preventDefault();
+
+    await authInstance.delete(`todos/${e.target.id}`);
+
+    getTodos();
+  };
+
+  const handleChangeInput = (e) => {
+    setNewTodo(e.target.value);
   };
 
   const handleClickToggleCheck = async (e) => {
@@ -68,20 +95,6 @@ const TodoPage = () => {
     setTodoData(target);
   };
 
-  const handleClickUpdateTodo = async (e, position) => {
-    e.preventDefault();
-
-    const target = todoData.filter((todoItem) => todoItem.id === +e.target.id);
-    const body = {
-      todo: target[0].todo,
-      isCompleted: target[0].isCompleted,
-    };
-    const reponse = await authInstance.put(`todos/${e.target.id}`, body);
-    console.log("update", reponse);
-
-    handleClickModifyMode(position);
-  };
-
   const handleClickModifyMode = (position) => {
     const updatedModifiedState = modifyMode.map((item, index) =>
       index === position ? !item : item
@@ -89,25 +102,14 @@ const TodoPage = () => {
     setModifyMode(updatedModifiedState);
   };
 
-  const handleClickDeleteTodo = async (e) => {
-    e.preventDefault();
-
-    console.log("e.target", e.target);
-
-    const reponse = await authInstance.delete(`todos/${e.target.id}`);
-    console.log(reponse);
-
-    fetchTodoListData();
-  };
-
   useEffect(() => {
-    fetchTodoListData();
+    getTodos();
   }, []);
 
   return (
     <>
       <h1>This is Todo Page</h1>
-      <form onSubmit={handleClickAddTodo}>
+      <form onSubmit={createTodo}>
         <TodoInput
           onChange={handleChangeInput}
           value={newTodo}
@@ -119,10 +121,10 @@ const TodoPage = () => {
         modifyMode={modifyMode}
         setModifyMode={setModifyMode}
         onCheck={handleClickToggleCheck}
-        onSubmit={handleClickUpdateTodo}
+        onSubmit={updateTodo}
         onInputChange={handleChangeNewInput}
         onClickModifyMode={handleClickModifyMode}
-        onClickDelete={handleClickDeleteTodo}
+        onClickDelete={deleteTodo}
       />
     </>
   );

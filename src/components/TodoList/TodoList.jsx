@@ -14,7 +14,7 @@ const TodoList = ({
     <>
       {todoData.map((todoItem, index) => {
         return (
-          <li key={todoItem.id}>
+          <S.Wrap key={todoItem.id}>
             {modifyMode[index] ? (
               <S.Label>
                 <S.Input
@@ -59,7 +59,7 @@ const TodoList = ({
                 </form>
               </>
             )}
-          </li>
+          </S.Wrap>
         );
       })}
     </>
