@@ -26,15 +26,23 @@ const TodoPage = () => {
 
   const createTodo = async (e) => {
     e.preventDefault();
-
+    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
     const body = {
       todo: newTodo,
     };
+
     try {
-      await authInstance.post("todos", body);
-    } catch (error) {
-      console.log(error);
-    }
+      await axios.post(`${baseURL}todos`, body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+    } catch (error) {}
+    // try {
+    //   await authInstance.post("todos", body);
+    // } catch (error) {
+    //   console.log(error);
+    // }
 
     getTodos();
   };
