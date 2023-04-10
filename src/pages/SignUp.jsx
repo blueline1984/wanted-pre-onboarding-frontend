@@ -10,7 +10,6 @@ const SignUpPage = () => {
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
       await baseInstance.post("auth/signup", {
         email: signUpInput.email,
@@ -18,7 +17,7 @@ const SignUpPage = () => {
       });
       navigate("/signin");
     } catch (error) {
-      setMessage(error);
+      console.log(error);
     }
   };
 
