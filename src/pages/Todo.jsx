@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import TodoInput from "../components/TodoInput/TodoInput";
 import TodoList from "../components/TodoList/TodoList";
-import { authInstance } from "../api/utils/instance";
+// import { authInstance } from "../api/utils/instance";
 
 const TodoPage = () => {
   const [todoData, setTodoData] = useState([]);
