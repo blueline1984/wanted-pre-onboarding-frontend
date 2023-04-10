@@ -25,7 +25,6 @@ const TodoList = ({
                 />
                 <form onSubmit={(e) => onSubmit(e, index)} id={todoItem.id}>
                   <S.Input
-                    placeholder="수정되는 인풋"
                     id={todoItem.id}
                     onChange={onInputChange}
                     value={todoItem.todo}

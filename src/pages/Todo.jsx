@@ -37,7 +37,9 @@ const TodoPage = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
     // try {
     //   await authInstance.post("todos", body);
     // } catch (error) {
@@ -50,13 +52,23 @@ const TodoPage = () => {
   const updateTodo = async (e, position) => {
     e.preventDefault();
 
+    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
     const target = todoData.filter((todoItem) => todoItem.id === +e.target.id);
     const body = {
       todo: target[0].todo,
       isCompleted: target[0].isCompleted,
     };
-    const reponse = await authInstance.put(`todos/${e.target.id}`, body);
-    console.log("update", reponse);
+
+    try {
+      await axios.put(`${baseURL}todos/${e.target.id}`, body, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    // const reponse = await authInstance.put(`todos/${e.target.id}`, body);
 
     handleClickModifyMode(position);
   };
@@ -64,7 +76,17 @@ const TodoPage = () => {
   const deleteTodo = async (e) => {
     e.preventDefault();
 
-    await authInstance.delete(`todos/${e.target.id}`);
+    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
+    try {
+      await axios.delete(`${baseURL}todos/${e.target.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    // await authInstance.delete(`todos/${e.target.id}`);
 
     getTodos();
   };
