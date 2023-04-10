@@ -15,14 +15,14 @@ const TodoList = ({
       {todoData.map((todoItem, index) => {
         return (
           <S.Wrap key={todoItem.id}>
+            <S.Input
+              type="checkbox"
+              id={todoItem.id}
+              onChange={onCheck}
+              checked={todoItem.isCompleted}
+            />
             {modifyMode[index] ? (
               <S.Label>
-                <S.Input
-                  type="checkbox"
-                  id={todoItem.id}
-                  onChange={onCheck}
-                  checked={todoItem.isCompleted}
-                />
                 <form onSubmit={(e) => onSubmit(e, index)} id={todoItem.id}>
                   <S.Input
                     id={todoItem.id}
