@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import TodoInput from "../components/TodoInput/TodoInput";
 import TodoList from "../components/TodoList/TodoList";
-import { authInstance, setClientHeaders } from "../api/utils/instance";
-import TodoListTest from "../components/TodoList/TodoListTest";
+import { authInstance } from "../api/utils/instance";
+// import TodoListTest from "../components/TodoList/TodoListTest";
 
 const TodoPage = () => {
   const [todoData, setTodoData] = useState([]);
@@ -78,7 +78,7 @@ const TodoPage = () => {
     // } catch (error) {
     //   console.error(error);
     // }
-    const reponse = await authInstance.put(`todos/${e.target.id}`, body);
+    await authInstance.put(`todos/${e.target.id}`, body);
 
     handleClickModifyMode(position);
   };
