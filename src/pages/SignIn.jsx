@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form/Form";
 import { validateEmail, validatePassword } from "../helper/checkValidation";
-import { baseInstance } from "../api/utils/instance";
+import { baseInstance, setClientHeaders } from "../api/utils/instance";
 
 const SignInPage = () => {
   const [signInInput, setSignInInput] = useState({ email: "", password: "" });
@@ -17,6 +17,8 @@ const SignInPage = () => {
         password: signInInput.password,
       });
       localStorage.setItem("token", response.data.access_token);
+
+      setClientHeaders(response.data.access_token);
 
       navigate("/todo");
     } catch (error) {

@@ -5,6 +5,8 @@ export const Wrap = styled.div`
   align-items: center;
 `;
 
+export const List = styled.li``;
+
 export const Input = styled.input``;
 
 export const Label = styled.label``;

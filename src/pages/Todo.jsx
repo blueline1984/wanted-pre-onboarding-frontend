@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import TodoInput from "../components/TodoInput/TodoInput";
 import TodoList from "../components/TodoList/TodoList";
-// import { authInstance } from "../api/utils/instance";
+import { authInstance, setClientHeaders } from "../api/utils/instance";
+import TodoListTest from "../components/TodoList/TodoListTest";
 
 const TodoPage = () => {
   const [todoData, setTodoData] = useState([]);
@@ -10,41 +11,50 @@ const TodoPage = () => {
   const [newTodo, setNewTodo] = useState("");
 
   const getTodos = async () => {
-    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
     try {
-      const response = await axios.get(`${baseURL}todos`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await authInstance.get("todos");
+
       setTodoData(response.data);
       setModifyMode(new Array(response.data.length).fill(false));
     } catch (error) {
       console.log(error);
     }
+
+    // const baseURL = "https://www.pre-onboarding-selection-task.shop/";
+    // try {
+    //   const response = await axios.get(`${baseURL}todos`, {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    //   });
+    //   setTodoData(response.data);
+    //   setModifyMode(new Array(response.data.length).fill(false));
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const createTodo = async (e) => {
     e.preventDefault();
-    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
+    // const baseURL = "https://www.pre-onboarding-selection-task.shop/";
     const body = {
       todo: newTodo,
     };
 
-    try {
-      await axios.post(`${baseURL}todos`, body, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
     // try {
-    //   await authInstance.post("todos", body);
+    //   await axios.post(`${baseURL}todos`, body, {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    //   });
     // } catch (error) {
-    //   console.log(error);
+    //   console.error(error);
     // }
+    try {
+      await authInstance.post("todos", body);
+    } catch (error) {
+      console.log(error);
+    }
 
     getTodos();
   };
@@ -52,23 +62,23 @@ const TodoPage = () => {
   const updateTodo = async (e, position) => {
     e.preventDefault();
 
-    const baseURL = "https://www.pre-onboarding-selection-task.shop/";
+    // const baseURL = "https://www.pre-onboarding-selection-task.shop/";
     const target = todoData.filter((todoItem) => todoItem.id === +e.target.id);
     const body = {
       todo: target[0].todo,
       isCompleted: target[0].isCompleted,
     };
 
-    try {
-      await axios.put(`${baseURL}todos/${e.target.id}`, body, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-    }
-    // const reponse = await authInstance.put(`todos/${e.target.id}`, body);
+    // try {
+    //   await axios.put(`${baseURL}todos/${e.target.id}`, body, {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    const reponse = await authInstance.put(`todos/${e.target.id}`, body);
 
     handleClickModifyMode(position);
   };
@@ -138,6 +148,7 @@ const TodoPage = () => {
 
   return (
     <>
+      {/* <TodoListTest todoData={todoData} /> */}
       <h1>This is Todo Page</h1>
       <form onSubmit={createTodo}>
         <TodoInput
