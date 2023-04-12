@@ -21,7 +21,7 @@ const TodoList = ({
               onChange={onCheck}
               checked={todoItem.isCompleted}
             />
-            {modifyMode[index] ? (
+            {modifyMode[todoItem.id] === todoItem.todo ? (
               <S.Label>
                 <form onSubmit={(e) => onSubmit(e, index)} id={todoItem.id}>
                   <S.Input
@@ -36,7 +36,9 @@ const TodoList = ({
                   />
                 </form>
                 <Button
-                  onButtonClick={() => onClickModifyMode(index)}
+                  onButtonClick={() =>
+                    onClickModifyMode(todoItem.id, todoItem.todo)
+                  }
                   buttonDataTestId="cancel-button"
                   buttonText="Cancel"
                 />
@@ -45,7 +47,14 @@ const TodoList = ({
               <>
                 <S.Span>{todoItem.todo}</S.Span>
                 <Button
-                  onButtonClick={() => onClickModifyMode(index)}
+                  className={
+                    modifyMode[todoItem.id] === todoItem.todo
+                      ? "active-toggle"
+                      : ""
+                  }
+                  onButtonClick={() =>
+                    onClickModifyMode(todoItem.id, todoItem.todo)
+                  }
                   buttonDataTestId="modify-button"
                   buttonText="Modify"
                 />

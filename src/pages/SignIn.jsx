@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/Form/Form";
 import { validateEmail, validatePassword } from "../helper/checkValidation";
-import { baseInstance, setClientHeaders } from "../api/utils/instance";
+import { baseInstance, setClientHeaders } from "../api/axios/instance";
 
 const SignInPage = () => {
   const [signInInput, setSignInInput] = useState({ email: "", password: "" });
