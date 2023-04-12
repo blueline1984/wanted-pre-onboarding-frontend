@@ -20,8 +20,8 @@ const createTodo = async (e, body) => {
 
 const updateTodo = async (e, data) => {
   e.preventDefault();
-
   const target = data.filter((item) => item.id === +e.target.id);
+
   const body = {
     todo: target[0].todo,
     isCompleted: target[0].isCompleted,

@@ -14,20 +14,27 @@ const TodoPage = () => {
   const [newTodo, setNewTodo] = useState("");
   const [modifyMode, setModifyMode] = useState({});
 
+  console.log(modifyMode);
+
   const handleSubmitAddTodo = async (e) => {
     const body = { todo: newTodo };
     const data = await createTodo(e, body);
     setTodoData([...todoData, data]);
   };
 
-  const handleSubmitUpdateTodo = async (e, position) => {
-    const body = { todo: newTodo };
-    console.log("body", body);
-    const data = await updateTodo(e, body);
+  const handleSubmitUpdateTodo = async (e) => {
+    e.preventDefault();
+    const data = await updateTodo(e, todoData);
 
-    setTodoData([...todoData, data]);
+    const updatedTodos = todoData.map((item) => {
+      if (item.id === data.id) {
+        return { ...item, data };
+      }
+      return item;
+    });
 
-    // handleClickModifyMode(position);
+    setTodoData(updatedTodos);
+    handleClickModifyMode(e.target.id, "");
   };
 
   const handleClickDeleteTodo = async (e) => {
@@ -104,9 +111,9 @@ const TodoPage = () => {
     fetchTodos();
   }, []);
 
-  useEffect(() => {
-    setModifyMode(new Array(todoData.length).fill(false));
-  }, [todoData]);
+  // useEffect(() => {
+  //   setModifyMode(new Array(todoData.length).fill(false));
+  // }, [todoData]);
 
   return (
     <>
