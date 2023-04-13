@@ -22,6 +22,7 @@ const TodoPage = () => {
 
   const handleSubmitUpdateTodo = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const data = await updateTodo(e, todoData);
 
     const updatedTodos = todoData.map((todoItem) => {

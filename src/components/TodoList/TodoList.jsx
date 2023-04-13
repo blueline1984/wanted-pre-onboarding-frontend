@@ -22,10 +22,10 @@ const TodoList = ({
               checked={todoItem.isCompleted}
               value={todoItem.todo}
             />
-            <S.Label>
-              {modifyMode[todoItem.id] === todoItem.id ? (
-                <>
-                  <form onSubmit={(e) => onSubmitUpdate(e)} id={todoItem.id}>
+            {modifyMode[todoItem.id] === todoItem.id ? (
+              <>
+                <form onSubmit={(e) => onSubmitUpdate(e)} id={todoItem.id}>
+                  <S.Label>
                     <S.Input
                       id={todoItem.id}
                       onChange={onInputChange}
@@ -36,35 +36,35 @@ const TodoList = ({
                       buttonText="Submit"
                       buttonType="submit"
                     />
-                    <Button
-                      onButtonClick={() =>
-                        onClickModifyMode(todoItem.id, todoItem.id)
-                      }
-                      buttonDataTestId="cancel-button"
-                      buttonText="Cancel"
-                    />
-                  </form>
-                </>
-              ) : (
-                <>
-                  <S.Span>{todoItem.todo}</S.Span>
+                  </S.Label>
+                </form>
+                <Button
+                  onButtonClick={() =>
+                    onClickModifyMode(todoItem.id, todoItem.id)
+                  }
+                  buttonDataTestId="cancel-button"
+                  buttonText="Cancel"
+                />
+              </>
+            ) : (
+              <>
+                <S.Span>{todoItem.todo}</S.Span>
+                <Button
+                  onButtonClick={() =>
+                    onClickModifyMode(todoItem.id, todoItem.id)
+                  }
+                  buttonDataTestId="modify-button"
+                  buttonText="Modify"
+                />
+                <form onSubmit={onSubmitDelete} id={todoItem.id}>
                   <Button
-                    onButtonClick={() =>
-                      onClickModifyMode(todoItem.id, todoItem.id)
-                    }
-                    buttonDataTestId="modify-button"
-                    buttonText="Modify"
+                    buttonDataTestId="delete-button"
+                    buttonText="Delete"
+                    buttonType="submit"
                   />
-                  <form onSubmit={onSubmitDelete} id={todoItem.id}>
-                    <Button
-                      buttonDataTestId="delete-button"
-                      buttonText="Delete"
-                      buttonType="submit"
-                    />
-                  </form>
-                </>
-              )}
-            </S.Label>
+                </form>
+              </>
+            )}
           </S.Li>
         );
       })}
