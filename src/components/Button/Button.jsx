@@ -6,6 +6,7 @@ const Button = ({
   buttonText,
   buttonType,
   isEnabled = true,
+  children,
 }) => {
   return (
     <S.Button

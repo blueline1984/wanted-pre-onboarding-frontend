@@ -30,7 +30,6 @@ const updateTodo = async (e, data) => {
   const response = await authInstance.put(`todos/${e.target.id}`, body);
 
   return response.data;
-  // handleClickModifyMode(position);
 };
 
 const deleteTodo = async (e) => {

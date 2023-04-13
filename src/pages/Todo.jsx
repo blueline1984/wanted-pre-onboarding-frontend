@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import TodoInput from "../components/TodoInput/TodoInput";
 import TodoList from "../components/TodoList/TodoList";
-// import TodoListTest from "../components/TodoList/TodoListTest";
 import {
   getTodos,
   createTodo,
@@ -14,57 +13,57 @@ const TodoPage = () => {
   const [newTodo, setNewTodo] = useState("");
   const [modifyMode, setModifyMode] = useState({});
 
-  console.log(modifyMode);
-
   const handleSubmitAddTodo = async (e) => {
     const body = { todo: newTodo };
     const data = await createTodo(e, body);
     setTodoData([...todoData, data]);
+    setNewTodo("");
   };
 
   const handleSubmitUpdateTodo = async (e) => {
     e.preventDefault();
     const data = await updateTodo(e, todoData);
 
-    const updatedTodos = todoData.map((item) => {
-      if (item.id === data.id) {
-        return { ...item, data };
+    const updatedTodos = todoData.map((todoItem) => {
+      if (todoItem.id === data.id) {
+        return { ...todoItem, data };
       }
-      return item;
+      return todoItem;
     });
 
     setTodoData(updatedTodos);
     handleClickModifyMode(e.target.id, "");
   };
 
-  const handleClickDeleteTodo = async (e) => {
+  const handleSubmitDeleteTodo = async (e) => {
     await deleteTodo(e);
 
     const data = await getTodos();
     setTodoData(data);
   };
 
-  const handleChangeInput = (e) => {
+  const handleChangeAddInput = (e) => {
     setNewTodo(e.target.value);
   };
 
   const handleClickToggleCheck = async (e) => {
-    e.preventDefault();
-
-    const target = todoData.map((todoItem) => {
+    const updatedTodos = todoData.map((todoItem) => {
       if (todoItem.id === +e.target.id) {
         return {
           ...todoItem,
           isCompleted: !todoItem.isCompleted,
         };
+      } else {
+        return todoItem;
       }
-      return todoItem;
     });
 
-    setTodoData(target);
+    await updateTodo(e, updatedTodos);
+
+    setTodoData(updatedTodos);
   };
 
-  const handleChangeNewInput = (e) => {
+  const handleChangeUpdateInput = (e) => {
     const target = todoData.map((todoItem) => {
       if (todoItem.id === +e.target.id) {
         return {
@@ -77,23 +76,6 @@ const TodoPage = () => {
 
     setTodoData(target);
   };
-
-  // const handleClickModifyMode = (position) => {
-  //   const updatedModifiedState = modifyMode.map((item, index) =>
-  //     index === position ? !item : item
-  //   );
-  //   setModifyMode(updatedModifiedState);
-  // };
-
-  // const handleClickModifyMode = (e) => {
-  //   const { value } = e.target;
-
-  //   if (modifyMode.includes(value)) {
-  //     setModifyMode(modifyMode.filter((item) => item !== value));
-  //   } else {
-  //     setModifyMode([...modifyMode, value]);
-  //   }
-  // };
 
   const handleClickModifyMode = (id, value) => {
     setModifyMode((prevState) => ({
@@ -111,17 +93,12 @@ const TodoPage = () => {
     fetchTodos();
   }, []);
 
-  // useEffect(() => {
-  //   setModifyMode(new Array(todoData.length).fill(false));
-  // }, [todoData]);
-
   return (
     <>
-      {/* <TodoListTest todoData={todoData} /> */}
       <h1>This is Todo Page</h1>
       <form onSubmit={handleSubmitAddTodo}>
         <TodoInput
-          onChange={handleChangeInput}
+          onChange={handleChangeAddInput}
           value={newTodo}
           buttonType="submit"
         />
@@ -129,12 +106,11 @@ const TodoPage = () => {
       <TodoList
         todoData={todoData}
         modifyMode={modifyMode}
-        setModifyMode={setModifyMode}
         onCheck={handleClickToggleCheck}
-        onSubmit={handleSubmitUpdateTodo}
-        onInputChange={handleChangeNewInput}
+        onInputChange={handleChangeUpdateInput}
         onClickModifyMode={handleClickModifyMode}
-        onClickDelete={handleClickDeleteTodo}
+        onSubmitUpdate={handleSubmitUpdateTodo}
+        onSubmitDelete={handleSubmitDeleteTodo}
       />
     </>
   );
