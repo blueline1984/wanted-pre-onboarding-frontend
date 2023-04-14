@@ -22,7 +22,6 @@ const TodoPage = () => {
 
   const handleSubmitUpdateTodo = async (e) => {
     e.preventDefault();
-    e.stopPropagation();
     const data = await updateTodo(e, todoData);
 
     const updatedTodos = todoData.map((todoItem) => {
@@ -85,6 +84,17 @@ const TodoPage = () => {
     }));
   };
 
+  const handleClickCancel = (id, value) => {
+    handleClickModifyMode(id, value);
+
+    const fetchTodos = async () => {
+      const data = await getTodos();
+      setTodoData(data);
+    };
+
+    fetchTodos();
+  };
+
   useEffect(() => {
     const fetchTodos = async () => {
       const data = await getTodos();
@@ -112,6 +122,7 @@ const TodoPage = () => {
         onClickModifyMode={handleClickModifyMode}
         onSubmitUpdate={handleSubmitUpdateTodo}
         onSubmitDelete={handleSubmitDeleteTodo}
+        onClickCancel={handleClickCancel}
       />
     </>
   );

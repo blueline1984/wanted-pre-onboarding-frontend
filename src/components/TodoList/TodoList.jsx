@@ -9,6 +9,7 @@ const TodoList = ({
   onInputChange,
   onClickModifyMode,
   onSubmitDelete,
+  onClickCancel,
 }) => {
   return (
     <>
@@ -39,9 +40,7 @@ const TodoList = ({
                   </S.Label>
                 </form>
                 <Button
-                  onButtonClick={() =>
-                    onClickModifyMode(todoItem.id, todoItem.id)
-                  }
+                  onButtonClick={() => onClickCancel(todoItem.id, todoItem.id)}
                   buttonDataTestId="cancel-button"
                   buttonText="Cancel"
                 />
