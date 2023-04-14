@@ -1,8 +1,12 @@
 import { authInstance } from "../axios/instance";
 
 const getTodos = async () => {
-  const response = await authInstance.get("todos");
-  return response.data;
+  try {
+    const response = await authInstance.get("todos");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const createTodo = async (e, body) => {
@@ -12,7 +16,7 @@ const createTodo = async (e, body) => {
     const response = await authInstance.post("todos", body);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
