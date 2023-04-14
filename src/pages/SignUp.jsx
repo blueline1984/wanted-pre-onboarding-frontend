@@ -38,7 +38,7 @@ const SignUpPage = () => {
         emailValue={signUpInput.email}
         passswordValue={signUpInput.password}
         onInputChange={handleChangeInput}
-        buttonText="Sign Up"
+        buttonText="회원가입"
         buttonDataTestId="signup-button"
         buttonType="submit"
         isEnabled={

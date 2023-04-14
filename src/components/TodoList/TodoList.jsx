@@ -31,10 +31,11 @@ const TodoList = ({
                       id={todoItem.id}
                       onChange={onInputChange}
                       value={todoItem.todo}
+                      data-testid="modify-input"
                     />
                     <Button
                       buttonDataTestId="submit-button"
-                      buttonText="Submit"
+                      buttonText="제출"
                       buttonType="submit"
                     />
                   </form>
@@ -43,7 +44,7 @@ const TodoList = ({
                       onClickCancel(todoItem.id, todoItem.id)
                     }
                     buttonDataTestId="cancel-button"
-                    buttonText="Cancel"
+                    buttonText="취소"
                   />
                 </>
               ) : (
@@ -54,12 +55,12 @@ const TodoList = ({
                       onClickModifyMode(todoItem.id, todoItem.id)
                     }
                     buttonDataTestId="modify-button"
-                    buttonText="Modify"
+                    buttonText="수정"
                   />
                   <form onSubmit={onSubmitDelete} id={todoItem.id}>
                     <Button
                       buttonDataTestId="delete-button"
-                      buttonText="Delete"
+                      buttonText="삭제"
                       buttonType="submit"
                     />
                   </form>

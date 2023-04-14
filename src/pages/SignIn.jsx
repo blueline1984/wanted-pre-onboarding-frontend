@@ -43,7 +43,7 @@ const SignInPage = () => {
         emailValue={signInInput.email}
         passswordValue={signInInput.password}
         onInputChange={handleChangeInput}
-        buttonText="Sign In"
+        buttonText="로그인"
         buttonDataTestId="signin-button"
         buttonType="submit"
         isEnabled={
