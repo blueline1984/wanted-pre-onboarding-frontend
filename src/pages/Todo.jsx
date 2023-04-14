@@ -14,6 +14,10 @@ const TodoPage = () => {
   const [modifyMode, setModifyMode] = useState({});
 
   const handleSubmitAddTodo = async (e) => {
+    e.preventDefault();
+
+    if (!newTodo) return;
+
     const body = { todo: newTodo };
     const data = await createTodo(e, body);
     setTodoData([...todoData, data]);

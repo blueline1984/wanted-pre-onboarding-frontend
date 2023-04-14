@@ -16,7 +16,7 @@ const TodoList = ({
       {todoData.map((todoItem) => {
         return (
           <S.Li key={todoItem.id}>
-            <div style={{ display: "flex" }}>
+            <S.Wrap>
               <S.Input
                 type="checkbox"
                 id={todoItem.id}
@@ -27,18 +27,16 @@ const TodoList = ({
               {modifyMode[todoItem.id] === todoItem.id ? (
                 <>
                   <form onSubmit={(e) => onSubmitUpdate(e)} id={todoItem.id}>
-                    <S.Label>
-                      <S.Input
-                        id={todoItem.id}
-                        onChange={onInputChange}
-                        value={todoItem.todo}
-                      />
-                      <Button
-                        buttonDataTestId="submit-button"
-                        buttonText="Submit"
-                        buttonType="submit"
-                      />
-                    </S.Label>
+                    <S.Input
+                      id={todoItem.id}
+                      onChange={onInputChange}
+                      value={todoItem.todo}
+                    />
+                    <Button
+                      buttonDataTestId="submit-button"
+                      buttonText="Submit"
+                      buttonType="submit"
+                    />
                   </form>
                   <Button
                     onButtonClick={() =>
@@ -67,7 +65,7 @@ const TodoList = ({
                   </form>
                 </>
               )}
-            </div>
+            </S.Wrap>
           </S.Li>
         );
       })}

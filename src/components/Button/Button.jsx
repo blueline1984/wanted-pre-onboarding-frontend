@@ -6,17 +6,18 @@ const Button = ({
   buttonText,
   buttonType,
   isEnabled = true,
-  children,
 }) => {
   return (
-    <S.Button
-      type={buttonType}
-      onClick={onButtonClick}
-      data-testid={buttonDataTestId}
-      disabled={!isEnabled}
-    >
-      {buttonText}
-    </S.Button>
+    <S.Wrap>
+      <S.Button
+        type={buttonType}
+        onClick={onButtonClick}
+        data-testid={buttonDataTestId}
+        disabled={!isEnabled}
+      >
+        {buttonText}
+      </S.Button>
+    </S.Wrap>
   );
 };
 

@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const Wrap = styled.span`
   display: flex;
-  align-items: center;
 `;
 
-export const Li = styled.li``;
+export const Li = styled.li`
+  padding: 10px;
+`;
 
 export const Input = styled.input``;
 
