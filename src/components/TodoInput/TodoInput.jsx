@@ -7,7 +7,7 @@ const TodoInput = ({ onChange, value, buttonType }) => {
       <S.Input data-testid="new-todo-input" onChange={onChange} value={value} />
       <Button
         buttonDataTestId="new-todo-add-button"
-        buttonText="add"
+        buttonText="Add"
         buttonType={buttonType}
       />
     </>
